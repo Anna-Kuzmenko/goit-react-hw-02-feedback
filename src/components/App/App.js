@@ -11,6 +11,8 @@ class App extends Component {
     bad: 0,
   };
 
+  optionKeys = Object.keys(this.state);
+
   handleFeedBackAdd = (option) => {
     this.setState((prevState) => ({ [option]: prevState[option] + 1 }));
   };
@@ -32,13 +34,15 @@ class App extends Component {
       <div>
         <Section title="Please leave feedback">
           <FeedbackOptions
-            options={Object.keys(this.state)}
+            options={this.optionKeys}
             onLeaveFeedback={this.handleFeedBackAdd}
           />
+        </Section>
 
-          {this.countTotalFeedback() === 0 ? (
-            <Notification message="There is no feedback" />
-          ) : (
+        {this.countTotalFeedback() === 0 ? (
+          <Notification message="There is no feedback" />
+        ) : (
+          <Section title="Statistics">
             <Statistics
               good={good}
               neutral={neutral}
@@ -46,8 +50,8 @@ class App extends Component {
               total={this.countTotalFeedback()}
               positivePercentage={this.countPositiveFeedbackPercentage()}
             />
-          )}
-        </Section>
+          </Section>
+        )}
       </div>
     );
   }
